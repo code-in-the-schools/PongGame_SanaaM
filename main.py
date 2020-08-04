@@ -3,7 +3,7 @@ from paddle import Paddle
 from ball import Ball
 
 pygame.init()
-Paddle.init()
+Paddle.init() 
 Ball.init() 
 
 #define colors
