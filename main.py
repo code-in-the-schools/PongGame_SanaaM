@@ -1,3 +1,6 @@
+#citing 
+#https://www.101computing.net/pong-tutorial-using-pygame-getting-started/ 
+
 import pygame
 from paddle import Paddle
 from ball import Ball
@@ -5,20 +8,20 @@ from ball import Ball
 pygame.init() 
 
 #define colors
-BLACK = (0,0,0)
+PINK = (0,0,0)
 WHITE = (255,255,255)
 
-size = (700,500)
+size = (600,600) 
 screen = pygame.display.set_mode(size)
-pygame.display.set_caption("Pong")
+pygame.display.set_caption("PongGame")
 
 #adding paddles
 paddleS = Paddle(WHITE, 100, 15)
-paddleS.rect.x = 200
+paddleS.rect.x = 100
 paddleS.rect.y = 30
 
-paddleT = Paddle(WHITE, 200, 30)
-paddleT.rect.x = 400
+paddleT = Paddle(PINK, 200, 30)
+paddleT.rect.x = 200
 paddleT.rect.y = 60 
   
 #adding the ball
@@ -45,56 +48,51 @@ scoreT = 0
 
 #Main loop 
 while carryOn:
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      carryOn = False 
-    elif event.type==pygame.KEYDOWN:
-     if event.key==pygame.K_x:
-        carryOn=False 
 ##Moving the paddles when in use 
-  keys = pygame.key.get_pressed()       
-  if keys[pygame.K_w]:
-    paddleS.moveup(5)
-  if keys[pygame.K_s]:
+    keys = pygame.key.get_pressed()       
+    
+    if keys[pygame.K_w]:
+      paddleS.moveup(5)
+    if keys[pygame.K_s]:
       paddleS.movedown(5) 
-  if keys[pygame.K_UP]:
-    paddleT.moveup(5)   
-  if keys[pygame.K_DOWN]:
-    paddleT.movedown(5)
+    if keys[pygame.K_UP]:
+      paddleT.moveup(5)   
+    if keys[pygame.K_DOWN]:
+      paddleT.movedown(5)
 
-all_sprites_list.update()       
+    all_sprites_list.update()       
 
 #ball movement, see if the ball bounces against the walls 
-if ball.rect.x>=690:
-  ball.velocity[0] = -ball.velocity[0]
-if ball.rect.x<=0:
-  ball.velocity[0] = -ball.velocity[0]  
-if ball.rect.y>490:
-  ball.velocity[1] = -ball.velocity[1]   
-if ball.rect.y<0:
-  ball.velocity[1] = -ball.velocity[1]  
+    if ball.rect.x>=690:
+      ball.velocity[0] = -ball.velocity[0]
+    if ball.rect.x<=0:
+      ball.velocity[0] = -ball.velocity[0]  
+    if ball.rect.y>490:
+      ball.velocity[1] = -ball.velocity[1]   
+    if ball.rect.y<0:
+      ball.velocity[1] = -ball.velocity[1]  
 
 #adding ball bounce and collisions
-if pygame.sprite.collide_mask(ball, paddleS) or pygame.sprite.collide_mask(ball, paddleT):
-  ball.bounce()
+    if pygame.sprite.collide_mask(ball, paddleS) or       pygame.sprite.collide_mask(ball, paddleT):
+      ball.bounce()
   
 #Drawing code 
-screen.fill(BLACK)
-pygame.draw.line(screen, WHITE,[349,0], [349,500],5)   
+    screen.fill(PINK)
+    pygame.draw.line(screen, WHITE,[349,0], [349,500],5)   
 
 #sprites
-all_sprites_list.draw(screen)
+    all_sprites_list.draw(screen)
 
 #adding score
-font = pygame.font.Font(None, 74)
-text = font.render(str(scoreS), 1, WHITE)
-screen.blit(text,(250,10))
-text = font.render(str(scoreT), 1, WHITE)
-screen.blit(text, (420,10))
+    font = pygame.font.Font(None, 100)
+    text = font.render(str(scoreS), 1, WHITE)
+    screen.blit(text,(250,10))
+    text = font.render(str(scoreT), 1, WHITE)
+    screen.blit(text, (420,10))
 
-pygame.display.flip()
+    pygame.display.flip()
 
 #add time frame for each game played
-clock.tick(60)
+    clock.tick(60)
 
 pygame.quit()
